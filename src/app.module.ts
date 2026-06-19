@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
 import { HealthModule } from "./health/health.module";
+import { AuthProxyModule } from "./modules/auth/auth-proxy.module";
 
 @Module({
   imports: [
@@ -14,8 +15,10 @@ import { HealthModule } from "./health/health.module";
           .default("development"),
         PORT: Joi.number().port().default(3000),
         CORS_ORIGIN: Joi.string().default("*"),
+        AUTH_SERVICE_URL: Joi.string().uri().default("http://localhost:3001"),
       }),
     }),
+    AuthProxyModule,
     HealthModule,
   ],
 })

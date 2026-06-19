@@ -44,6 +44,7 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const Joi = __importStar(require("joi"));
 const health_module_1 = require("./health/health.module");
+const auth_proxy_module_1 = require("./modules/auth/auth-proxy.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -59,8 +60,10 @@ exports.AppModule = AppModule = __decorate([
                         .default("development"),
                     PORT: Joi.number().port().default(3000),
                     CORS_ORIGIN: Joi.string().default("*"),
+                    AUTH_SERVICE_URL: Joi.string().uri().default("http://localhost:3001"),
                 }),
             }),
+            auth_proxy_module_1.AuthProxyModule,
             health_module_1.HealthModule,
         ],
     })
