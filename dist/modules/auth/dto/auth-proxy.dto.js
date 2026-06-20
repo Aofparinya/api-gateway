@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidateTokenDto = exports.LogoutDto = exports.RefreshTokenDto = exports.RegisterDto = exports.LoginDto = void 0;
+exports.AssignRolesDto = exports.UpdateUserDto = exports.CreateUserDto = exports.ValidateTokenDto = exports.LogoutDto = exports.RefreshTokenDto = exports.RegisterDto = exports.LoginDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class LoginDto {
@@ -68,4 +68,35 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ValidateTokenDto.prototype, "token", void 0);
+class CreateUserDto extends RegisterDto {
+    roleCodes;
+}
+exports.CreateUserDto = CreateUserDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: [String], example: ["USER"] }),
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ArrayNotEmpty)(),
+    (0, class_validator_1.IsString)({ each: true }),
+    __metadata("design:type", Array)
+], CreateUserDto.prototype, "roleCodes", void 0);
+class UpdateUserDto extends (0, swagger_1.PartialType)(CreateUserDto) {
+    isActive;
+}
+exports.UpdateUserDto = UpdateUserDto;
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], UpdateUserDto.prototype, "isActive", void 0);
+class AssignRolesDto {
+    roleCodes;
+}
+exports.AssignRolesDto = AssignRolesDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: [String] }),
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ArrayNotEmpty)(),
+    (0, class_validator_1.IsString)({ each: true }),
+    __metadata("design:type", Array)
+], AssignRolesDto.prototype, "roleCodes", void 0);
 //# sourceMappingURL=auth-proxy.dto.js.map

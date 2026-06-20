@@ -128,11 +128,17 @@ let ProductsProxyController = class ProductsProxyController extends ProxyControl
     assignCategory(id, authorization, body, response) {
         return this.send(response, `products/${id}/categories`, "POST", authorization, body);
     }
+    listCategories(id, authorization, response) {
+        return this.send(response, `products/${id}/categories`, "GET", authorization);
+    }
     removeCategory(id, categoryId, authorization, response) {
         return this.send(response, `products/${id}/categories/${categoryId}`, "DELETE", authorization);
     }
     createImage(id, authorization, body, response) {
         return this.send(response, `products/${id}/images`, "POST", authorization, body);
+    }
+    listImages(id, authorization, response) {
+        return this.send(response, `products/${id}/images`, "GET", authorization);
     }
     updateImage(id, imageId, authorization, body, response) {
         return this.send(response, `products/${id}/images/${imageId}`, "PATCH", authorization, body);
@@ -226,6 +232,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductsProxyController.prototype, "assignCategory", null);
 __decorate([
+    (0, common_1.Get)("products/:id/categories"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Headers)("authorization")),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", void 0)
+], ProductsProxyController.prototype, "listCategories", null);
+__decorate([
     (0, common_1.Delete)("products/:id/categories/:categoryId"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Param)("categoryId")),
@@ -245,6 +260,15 @@ __decorate([
     __metadata("design:paramtypes", [String, Object, catalog_proxy_dto_1.CreateProductImageDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductsProxyController.prototype, "createImage", null);
+__decorate([
+    (0, common_1.Get)("products/:id/images"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Headers)("authorization")),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", void 0)
+], ProductsProxyController.prototype, "listImages", null);
 __decorate([
     (0, common_1.Patch)("products/:id/images/:imageId"),
     __param(0, (0, common_1.Param)("id")),
@@ -437,6 +461,9 @@ let InventoryProxyController = class InventoryProxyController extends ProxyContr
     reserve(authorization, body, response) {
         return this.send(response, "inventory/reservations", "POST", authorization, body);
     }
+    reservations(authorization, query, response) {
+        return this.send(response, "inventory/reservations", "GET", authorization, undefined, { ...query });
+    }
     getReservation(id, authorization, response) {
         return this.send(response, `inventory/reservations/${id}`, "GET", authorization);
     }
@@ -487,6 +514,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, catalog_proxy_dto_1.CreateReservationDto, Object]),
     __metadata("design:returntype", void 0)
 ], InventoryProxyController.prototype, "reserve", null);
+__decorate([
+    (0, common_1.Get)("reservations"),
+    __param(0, (0, common_1.Headers)("authorization")),
+    __param(1, (0, common_1.Query)()),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, catalog_proxy_dto_1.ReservationQueryDto, Object]),
+    __metadata("design:returntype", void 0)
+], InventoryProxyController.prototype, "reservations", null);
 __decorate([
     (0, common_1.Get)("reservations/:id"),
     __param(0, (0, common_1.Param)("id")),

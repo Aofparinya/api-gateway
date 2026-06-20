@@ -24,6 +24,7 @@ import {
   CreateWarehouseDto,
   InventoryQueryDto,
   ProductQueryDto,
+  ReservationQueryDto,
   StockAdjustmentDto,
   UpdateCategoryDto,
   UpdatePriceDto,
@@ -194,6 +195,20 @@ export class ProductsProxyController extends ProxyController {
     );
   }
 
+  @Get("products/:id/categories")
+  listCategories(
+    @Param("id") id: string,
+    @Headers("authorization") authorization: string | undefined,
+    @Res() response: Response,
+  ) {
+    return this.send(
+      response,
+      `products/${id}/categories`,
+      "GET",
+      authorization,
+    );
+  }
+
   @Delete("products/:id/categories/:categoryId")
   removeCategory(
     @Param("id") id: string,
@@ -223,6 +238,15 @@ export class ProductsProxyController extends ProxyController {
       authorization,
       body,
     );
+  }
+
+  @Get("products/:id/images")
+  listImages(
+    @Param("id") id: string,
+    @Headers("authorization") authorization: string | undefined,
+    @Res() response: Response,
+  ) {
+    return this.send(response, `products/${id}/images`, "GET", authorization);
   }
 
   @Patch("products/:id/images/:imageId")
@@ -481,6 +505,22 @@ export class InventoryProxyController extends ProxyController {
       "POST",
       authorization,
       body,
+    );
+  }
+
+  @Get("reservations")
+  reservations(
+    @Headers("authorization") authorization: string | undefined,
+    @Query() query: ReservationQueryDto,
+    @Res() response: Response,
+  ) {
+    return this.send(
+      response,
+      "inventory/reservations",
+      "GET",
+      authorization,
+      undefined,
+      { ...query },
     );
   }
 

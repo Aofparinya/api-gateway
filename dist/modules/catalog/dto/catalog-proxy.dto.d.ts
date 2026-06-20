@@ -72,6 +72,14 @@ export declare class InventoryQueryDto {
     page: number;
     pageSize: number;
 }
+export declare class ReservationQueryDto {
+    warehouseId?: string;
+    status?: string;
+    referenceType?: string;
+    referenceId?: string;
+    page: number;
+    pageSize: number;
+}
 export declare class StockAdjustmentDto {
     warehouseId: string;
     skuId: string;

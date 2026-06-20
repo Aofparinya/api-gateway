@@ -47,6 +47,7 @@ const health_module_1 = require("./health/health.module");
 const auth_proxy_module_1 = require("./modules/auth/auth-proxy.module");
 const catalog_proxy_module_1 = require("./modules/catalog/catalog-proxy.module");
 const customer_proxy_module_1 = require("./modules/customer/customer-proxy.module");
+const order_proxy_module_1 = require("./modules/order/order-proxy.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -69,11 +70,13 @@ exports.AppModule = AppModule = __decorate([
                     CATALOG_SERVICE_URL: Joi.string()
                         .uri()
                         .default("http://localhost:3003"),
+                    ORDER_SERVICE_URL: Joi.string().uri().default("http://localhost:3005"),
                 }),
             }),
             auth_proxy_module_1.AuthProxyModule,
             catalog_proxy_module_1.CatalogProxyModule,
             customer_proxy_module_1.CustomerProxyModule,
+            order_proxy_module_1.OrderProxyModule,
             health_module_1.HealthModule,
         ],
     })

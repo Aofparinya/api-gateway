@@ -257,6 +257,43 @@ export class InventoryQueryDto {
   pageSize = 20;
 }
 
+export class ReservationQueryDto {
+  @ApiPropertyOptional({ format: "uuid" })
+  @IsOptional()
+  @IsUUID()
+  warehouseId?: string;
+
+  @ApiPropertyOptional({
+    enum: ["PENDING", "CONFIRMED", "RELEASED", "EXPIRED"],
+  })
+  @IsOptional()
+  @IsIn(["PENDING", "CONFIRMED", "RELEASED", "EXPIRED"])
+  status?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  referenceType?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  referenceId?: string;
+
+  @ApiPropertyOptional({ default: 1 })
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  page = 1;
+
+  @ApiPropertyOptional({ default: 20, maximum: 100 })
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(100)
+  pageSize = 20;
+}
+
 export class StockAdjustmentDto {
   @ApiProperty({ format: "uuid" })
   @IsUUID()

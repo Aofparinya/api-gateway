@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateReservationDto = exports.ReservationItemDto = exports.StockAdjustmentDto = exports.InventoryQueryDto = exports.UpdateWarehouseDto = exports.CreateWarehouseDto = exports.UpdatePriceDto = exports.CreatePriceDto = exports.UpdateSkuDto = exports.CreateSkuDto = exports.UpdateProductImageDto = exports.CreateProductImageDto = exports.AssignCategoryDto = exports.ProductQueryDto = exports.UpdateProductDto = exports.CreateProductDto = exports.UpdateCategoryDto = exports.CreateCategoryDto = void 0;
+exports.CreateReservationDto = exports.ReservationItemDto = exports.StockAdjustmentDto = exports.ReservationQueryDto = exports.InventoryQueryDto = exports.UpdateWarehouseDto = exports.CreateWarehouseDto = exports.UpdatePriceDto = exports.CreatePriceDto = exports.UpdateSkuDto = exports.CreateSkuDto = exports.UpdateProductImageDto = exports.CreateProductImageDto = exports.AssignCategoryDto = exports.ProductQueryDto = exports.UpdateProductDto = exports.CreateProductDto = exports.UpdateCategoryDto = exports.CreateCategoryDto = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
@@ -329,6 +329,56 @@ __decorate([
     (0, class_validator_1.Max)(100),
     __metadata("design:type", Object)
 ], InventoryQueryDto.prototype, "pageSize", void 0);
+class ReservationQueryDto {
+    warehouseId;
+    status;
+    referenceType;
+    referenceId;
+    page = 1;
+    pageSize = 20;
+}
+exports.ReservationQueryDto = ReservationQueryDto;
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ format: "uuid" }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], ReservationQueryDto.prototype, "warehouseId", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        enum: ["PENDING", "CONFIRMED", "RELEASED", "EXPIRED"],
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsIn)(["PENDING", "CONFIRMED", "RELEASED", "EXPIRED"]),
+    __metadata("design:type", String)
+], ReservationQueryDto.prototype, "status", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ReservationQueryDto.prototype, "referenceType", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ReservationQueryDto.prototype, "referenceId", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ default: 1 }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(1),
+    __metadata("design:type", Object)
+], ReservationQueryDto.prototype, "page", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ default: 20, maximum: 100 }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(1),
+    (0, class_validator_1.Max)(100),
+    __metadata("design:type", Object)
+], ReservationQueryDto.prototype, "pageSize", void 0);
 class StockAdjustmentDto {
     warehouseId;
     skuId;

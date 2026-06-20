@@ -6,23 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthProxyModule = void 0;
+exports.OrderProxyModule = void 0;
 const common_1 = require("@nestjs/common");
-const auth_proxy_controller_1 = require("./auth-proxy.controller");
-const admin_proxy_controller_1 = require("./admin-proxy.controller");
-const auth_proxy_service_1 = require("./auth-proxy.service");
-let AuthProxyModule = class AuthProxyModule {
+const order_proxy_controller_1 = require("./order-proxy.controller");
+const order_proxy_service_1 = require("./order-proxy.service");
+let OrderProxyModule = class OrderProxyModule {
 };
-exports.AuthProxyModule = AuthProxyModule;
-exports.AuthProxyModule = AuthProxyModule = __decorate([
+exports.OrderProxyModule = OrderProxyModule;
+exports.OrderProxyModule = OrderProxyModule = __decorate([
     (0, common_1.Module)({
         controllers: [
-            auth_proxy_controller_1.AuthProxyController,
-            admin_proxy_controller_1.UsersProxyController,
-            admin_proxy_controller_1.RolesProxyController,
-            admin_proxy_controller_1.PermissionsProxyController,
+            order_proxy_controller_1.OrdersProxyController,
+            order_proxy_controller_1.PaymentsProxyController,
+            order_proxy_controller_1.InvoicesProxyController,
+            order_proxy_controller_1.RefundsProxyController,
         ],
-        providers: [auth_proxy_service_1.AuthProxyService],
+        providers: [order_proxy_service_1.OrderProxyService],
     })
-], AuthProxyModule);
-//# sourceMappingURL=auth-proxy.module.js.map
+], OrderProxyModule);
+//# sourceMappingURL=order-proxy.module.js.map

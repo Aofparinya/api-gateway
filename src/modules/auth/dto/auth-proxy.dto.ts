@@ -1,5 +1,13 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsString, MinLength } from "class-validator";
+import { ApiProperty, PartialType } from "@nestjs/swagger";
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsBoolean,
+  IsEmail,
+  IsOptional,
+  IsString,
+  MinLength,
+} from "class-validator";
 
 export class LoginDto {
   @ApiProperty({ example: "admin@order-platform.local" })
@@ -38,4 +46,26 @@ export class ValidateTokenDto {
   })
   @IsString()
   token!: string;
+}
+
+export class CreateUserDto extends RegisterDto {
+  @ApiProperty({ type: [String], example: ["USER"] })
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  roleCodes!: string[];
+}
+
+export class UpdateUserDto extends PartialType(CreateUserDto) {
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
+}
+
+export class AssignRolesDto {
+  @ApiProperty({ type: [String] })
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  roleCodes!: string[];
 }

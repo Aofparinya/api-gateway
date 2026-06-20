@@ -5,6 +5,7 @@ import { HealthModule } from "./health/health.module";
 import { AuthProxyModule } from "./modules/auth/auth-proxy.module";
 import { CatalogProxyModule } from "./modules/catalog/catalog-proxy.module";
 import { CustomerProxyModule } from "./modules/customer/customer-proxy.module";
+import { OrderProxyModule } from "./modules/order/order-proxy.module";
 
 @Module({
   imports: [
@@ -24,11 +25,13 @@ import { CustomerProxyModule } from "./modules/customer/customer-proxy.module";
         CATALOG_SERVICE_URL: Joi.string()
           .uri()
           .default("http://localhost:3003"),
+        ORDER_SERVICE_URL: Joi.string().uri().default("http://localhost:3005"),
       }),
     }),
     AuthProxyModule,
     CatalogProxyModule,
     CustomerProxyModule,
+    OrderProxyModule,
     HealthModule,
   ],
 })

@@ -1,6 +1,6 @@
 import type { Response } from "express";
 import { CatalogProxyService } from "./catalog-proxy.service";
-import { AssignCategoryDto, CreateCategoryDto, CreatePriceDto, CreateProductDto, CreateProductImageDto, CreateReservationDto, CreateSkuDto, CreateWarehouseDto, InventoryQueryDto, ProductQueryDto, StockAdjustmentDto, UpdateCategoryDto, UpdatePriceDto, UpdateProductDto, UpdateProductImageDto, UpdateSkuDto, UpdateWarehouseDto } from "./dto/catalog-proxy.dto";
+import { AssignCategoryDto, CreateCategoryDto, CreatePriceDto, CreateProductDto, CreateProductImageDto, CreateReservationDto, CreateSkuDto, CreateWarehouseDto, InventoryQueryDto, ProductQueryDto, ReservationQueryDto, StockAdjustmentDto, UpdateCategoryDto, UpdatePriceDto, UpdateProductDto, UpdateProductImageDto, UpdateSkuDto, UpdateWarehouseDto } from "./dto/catalog-proxy.dto";
 type QueryValue = string | number | boolean | undefined;
 declare abstract class ProxyController {
     protected readonly proxy: CatalogProxyService;
@@ -23,8 +23,10 @@ export declare class ProductsProxyController extends ProxyController {
     updateProduct(id: string, authorization: string | undefined, body: UpdateProductDto, response: Response): Promise<void>;
     deleteProduct(id: string, authorization: string | undefined, response: Response): Promise<void>;
     assignCategory(id: string, authorization: string | undefined, body: AssignCategoryDto, response: Response): Promise<void>;
+    listCategories(id: string, authorization: string | undefined, response: Response): Promise<void>;
     removeCategory(id: string, categoryId: string, authorization: string | undefined, response: Response): Promise<void>;
     createImage(id: string, authorization: string | undefined, body: CreateProductImageDto, response: Response): Promise<void>;
+    listImages(id: string, authorization: string | undefined, response: Response): Promise<void>;
     updateImage(id: string, imageId: string, authorization: string | undefined, body: UpdateProductImageDto, response: Response): Promise<void>;
     deleteImage(id: string, imageId: string, authorization: string | undefined, response: Response): Promise<void>;
     createSku(id: string, authorization: string | undefined, body: CreateSkuDto, response: Response): Promise<void>;
@@ -50,6 +52,7 @@ export declare class InventoryProxyController extends ProxyController {
     movements(authorization: string | undefined, query: InventoryQueryDto, response: Response): Promise<void>;
     adjust(authorization: string | undefined, body: StockAdjustmentDto, response: Response): Promise<void>;
     reserve(authorization: string | undefined, body: CreateReservationDto, response: Response): Promise<void>;
+    reservations(authorization: string | undefined, query: ReservationQueryDto, response: Response): Promise<void>;
     getReservation(id: string, authorization: string | undefined, response: Response): Promise<void>;
     confirm(id: string, authorization: string | undefined, response: Response): Promise<void>;
     release(id: string, authorization: string | undefined, response: Response): Promise<void>;
