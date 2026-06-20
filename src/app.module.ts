@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
 import { HealthModule } from "./health/health.module";
 import { AuthProxyModule } from "./modules/auth/auth-proxy.module";
+import { CatalogProxyModule } from "./modules/catalog/catalog-proxy.module";
 import { CustomerProxyModule } from "./modules/customer/customer-proxy.module";
 
 @Module({
@@ -20,9 +21,13 @@ import { CustomerProxyModule } from "./modules/customer/customer-proxy.module";
         CUSTOMER_SERVICE_URL: Joi.string()
           .uri()
           .default("http://localhost:3002"),
+        CATALOG_SERVICE_URL: Joi.string()
+          .uri()
+          .default("http://localhost:3003"),
       }),
     }),
     AuthProxyModule,
+    CatalogProxyModule,
     CustomerProxyModule,
     HealthModule,
   ],
