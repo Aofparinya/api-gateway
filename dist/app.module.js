@@ -45,6 +45,7 @@ const config_1 = require("@nestjs/config");
 const Joi = __importStar(require("joi"));
 const health_module_1 = require("./health/health.module");
 const auth_proxy_module_1 = require("./modules/auth/auth-proxy.module");
+const customer_proxy_module_1 = require("./modules/customer/customer-proxy.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -61,9 +62,13 @@ exports.AppModule = AppModule = __decorate([
                     PORT: Joi.number().port().default(3000),
                     CORS_ORIGIN: Joi.string().default("*"),
                     AUTH_SERVICE_URL: Joi.string().uri().default("http://localhost:3001"),
+                    CUSTOMER_SERVICE_URL: Joi.string()
+                        .uri()
+                        .default("http://localhost:3002"),
                 }),
             }),
             auth_proxy_module_1.AuthProxyModule,
+            customer_proxy_module_1.CustomerProxyModule,
             health_module_1.HealthModule,
         ],
     })
