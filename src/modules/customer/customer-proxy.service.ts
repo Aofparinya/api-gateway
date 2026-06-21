@@ -1,13 +1,18 @@
-import { BadGatewayException, Injectable } from "@nestjs/common";
+import { BadGatewayException, Inject, Injectable, Scope } from "@nestjs/common";
+import { REQUEST } from "@nestjs/core";
 import { ConfigService } from "@nestjs/config";
+import type { Request } from "express";
 
 type QueryValue = string | number | boolean | undefined;
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class CustomerProxyService {
   private readonly baseUrl: string;
 
-  constructor(config: ConfigService) {
+  constructor(
+    config: ConfigService,
+    @Inject(REQUEST) private readonly request: Request,
+  ) {
     this.baseUrl = config
       .get<string>("CUSTOMER_SERVICE_URL", "http://localhost:3002")
       .replace(/\/$/, "");
@@ -32,6 +37,7 @@ export class CustomerProxyService {
         headers: {
           "content-type": "application/json",
           ...(authorization ? { authorization } : {}),
+          ...this.correlationHeaders(),
         },
         body: body === undefined ? undefined : JSON.stringify(body),
         signal: AbortSignal.timeout(5000),
@@ -44,5 +50,10 @@ export class CustomerProxyService {
     } catch {
       throw new BadGatewayException("Customer service is unavailable");
     }
+  }
+
+  private correlationHeaders(): Record<string, string> {
+    const correlationId = this.request.header("x-correlation-id");
+    return correlationId ? { "x-correlation-id": correlationId } : {};
   }
 }

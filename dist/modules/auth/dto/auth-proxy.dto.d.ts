@@ -14,6 +14,10 @@ export declare class LogoutDto extends RefreshTokenDto {
 export declare class ValidateTokenDto {
     token: string;
 }
+export declare class ServiceTokenDto {
+    clientId: string;
+    clientSecret: string;
+}
 export declare class CreateUserDto extends RegisterDto {
     roleCodes: string[];
 }

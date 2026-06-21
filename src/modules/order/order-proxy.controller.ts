@@ -241,6 +241,31 @@ export class PaymentsProxyController extends ProxyController {
     return this.send(response, `payments/${id}`, "GET", authorization);
   }
 
+  @Get(":id/checkout")
+  checkout(
+    @Param("id") id: string,
+    @Headers("authorization") authorization: string | undefined,
+    @Res() response: Response,
+  ) {
+    return this.send(response, `payments/${id}/checkout`, "GET", authorization);
+  }
+
+  @Post(":id/retry-checkout")
+  retryCheckout(
+    @Param("id") id: string,
+    @Headers() headers: Record<string, string>,
+    @Res() response: Response,
+  ) {
+    return this.send(
+      response,
+      `payments/${id}/retry-checkout`,
+      "POST",
+      headers.authorization,
+      headers["idempotency-key"],
+      {},
+    );
+  }
+
   @Post(":id/capture")
   capture(
     @Param("id") id: string,

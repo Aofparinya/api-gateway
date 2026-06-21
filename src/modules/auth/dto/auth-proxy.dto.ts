@@ -48,6 +48,16 @@ export class ValidateTokenDto {
   token!: string;
 }
 
+export class ServiceTokenDto {
+  @ApiProperty({ example: "web-storefront" })
+  @IsString()
+  clientId!: string;
+
+  @ApiProperty()
+  @IsString()
+  clientSecret!: string;
+}
+
 export class CreateUserDto extends RegisterDto {
   @ApiProperty({ type: [String], example: ["USER"] })
   @IsArray()

@@ -8,13 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerProxyService = void 0;
 const common_1 = require("@nestjs/common");
+const core_1 = require("@nestjs/core");
 const config_1 = require("@nestjs/config");
 let CustomerProxyService = class CustomerProxyService {
+    request;
     baseUrl;
-    constructor(config) {
+    constructor(config, request) {
+        this.request = request;
         this.baseUrl = config
             .get("CUSTOMER_SERVICE_URL", "http://localhost:3002")
             .replace(/\/$/, "");
@@ -32,6 +38,7 @@ let CustomerProxyService = class CustomerProxyService {
                 headers: {
                     "content-type": "application/json",
                     ...(authorization ? { authorization } : {}),
+                    ...this.correlationHeaders(),
                 },
                 body: body === undefined ? undefined : JSON.stringify(body),
                 signal: AbortSignal.timeout(5000),
@@ -46,10 +53,15 @@ let CustomerProxyService = class CustomerProxyService {
             throw new common_1.BadGatewayException("Customer service is unavailable");
         }
     }
+    correlationHeaders() {
+        const correlationId = this.request.header("x-correlation-id");
+        return correlationId ? { "x-correlation-id": correlationId } : {};
+    }
 };
 exports.CustomerProxyService = CustomerProxyService;
 exports.CustomerProxyService = CustomerProxyService = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_1.ConfigService])
+    (0, common_1.Injectable)({ scope: common_1.Scope.REQUEST }),
+    __param(1, (0, common_1.Inject)(core_1.REQUEST)),
+    __metadata("design:paramtypes", [config_1.ConfigService, Object])
 ], CustomerProxyService);
 //# sourceMappingURL=customer-proxy.service.js.map

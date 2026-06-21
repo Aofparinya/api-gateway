@@ -1,13 +1,18 @@
-import { BadGatewayException, Injectable } from "@nestjs/common";
+import { BadGatewayException, Inject, Injectable, Scope } from "@nestjs/common";
+import { REQUEST } from "@nestjs/core";
 import { ConfigService } from "@nestjs/config";
+import type { Request } from "express";
 
 type QueryValue = string | number | boolean | undefined;
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class CatalogProxyService {
   private readonly baseUrl: string;
 
-  constructor(config: ConfigService) {
+  constructor(
+    config: ConfigService,
+    @Inject(REQUEST) private readonly request: Request,
+  ) {
     this.baseUrl = config
       .get<string>("CATALOG_SERVICE_URL", "http://localhost:3003")
       .replace(/\/$/, "");
@@ -32,6 +37,7 @@ export class CatalogProxyService {
         headers: {
           "content-type": "application/json",
           ...(authorization ? { authorization } : {}),
+          ...this.correlationHeaders(),
         },
         body: body === undefined ? undefined : JSON.stringify(body),
         signal: AbortSignal.timeout(10000),
@@ -44,5 +50,10 @@ export class CatalogProxyService {
     } catch {
       throw new BadGatewayException("Catalog service is unavailable");
     }
+  }
+
+  private correlationHeaders(): Record<string, string> {
+    const correlationId = this.request.header("x-correlation-id");
+    return correlationId ? { "x-correlation-id": correlationId } : {};
   }
 }

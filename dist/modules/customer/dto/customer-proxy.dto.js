@@ -18,6 +18,7 @@ const customerStatuses = ["ACTIVE", "INACTIVE", "BLOCKED"];
 const addressTypes = ["BILLING", "SHIPPING", "CONTACT"];
 const branchTypes = ["HEAD_OFFICE", "BRANCH"];
 class CreateCustomerDto {
+    id;
     customerType;
     status;
     firstName;
@@ -27,6 +28,15 @@ class CreateCustomerDto {
     note;
 }
 exports.CreateCustomerDto = CreateCustomerDto;
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        format: "uuid",
+        description: "Optional external identity for idempotent storefront customers",
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], CreateCustomerDto.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ enum: customerTypes }),
     (0, class_validator_1.IsIn)(customerTypes),

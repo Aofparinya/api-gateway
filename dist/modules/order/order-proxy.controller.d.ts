@@ -26,6 +26,8 @@ export declare class OrdersProxyController extends ProxyController {
 export declare class PaymentsProxyController extends ProxyController {
     constructor(proxy: OrderProxyService);
     get(id: string, authorization: string | undefined, response: Response): Promise<void>;
+    checkout(id: string, authorization: string | undefined, response: Response): Promise<void>;
+    retryCheckout(id: string, headers: Record<string, string>, response: Response): Promise<void>;
     capture(id: string, headers: Record<string, string>, response: Response): Promise<void>;
     void(id: string, headers: Record<string, string>, response: Response): Promise<void>;
     refund(id: string, headers: Record<string, string>, body: RefundDto, response: Response): Promise<void>;

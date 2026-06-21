@@ -15,6 +15,7 @@ import {
   LogoutDto,
   RefreshTokenDto,
   RegisterDto,
+  ServiceTokenDto,
   ValidateTokenDto,
 } from "./dto/auth-proxy.dto";
 
@@ -47,6 +48,11 @@ export class AuthProxyController {
   @Post("validate-token")
   validate(@Body() body: ValidateTokenDto, @Res() response: Response) {
     return this.send(response, "auth/validate-token", "POST", body);
+  }
+
+  @Post("service-token")
+  serviceToken(@Body() body: ServiceTokenDto, @Res() response: Response) {
+    return this.send(response, "auth/service-token", "POST", body);
   }
 
   @Get("me")

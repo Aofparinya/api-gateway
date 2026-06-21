@@ -6,6 +6,7 @@ import {
   IsInt,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   Max,
   MaxLength,
@@ -25,6 +26,15 @@ const addressTypes = ["BILLING", "SHIPPING", "CONTACT"] as const;
 const branchTypes = ["HEAD_OFFICE", "BRANCH"] as const;
 
 export class CreateCustomerDto {
+  @ApiPropertyOptional({
+    format: "uuid",
+    description:
+      "Optional external identity for idempotent storefront customers",
+  })
+  @IsOptional()
+  @IsUUID()
+  id?: string;
+
   @ApiProperty({ enum: customerTypes })
   @IsIn(customerTypes)
   customerType!: (typeof customerTypes)[number];

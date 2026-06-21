@@ -3,6 +3,7 @@ declare const customerStatuses: readonly ["ACTIVE", "INACTIVE", "BLOCKED"];
 declare const addressTypes: readonly ["BILLING", "SHIPPING", "CONTACT"];
 declare const branchTypes: readonly ["HEAD_OFFICE", "BRANCH"];
 export declare class CreateCustomerDto {
+    id?: string;
     customerType: (typeof customerTypes)[number];
     status?: (typeof customerStatuses)[number];
     firstName?: string;

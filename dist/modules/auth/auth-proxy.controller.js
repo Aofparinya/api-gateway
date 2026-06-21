@@ -37,6 +37,9 @@ let AuthProxyController = class AuthProxyController {
     validate(body, response) {
         return this.send(response, "auth/validate-token", "POST", body);
     }
+    serviceToken(body, response) {
+        return this.send(response, "auth/service-token", "POST", body);
+    }
     me(authorization, response) {
         return this.send(response, "auth/me", "GET", undefined, authorization);
     }
@@ -92,6 +95,14 @@ __decorate([
     __metadata("design:paramtypes", [auth_proxy_dto_1.ValidateTokenDto, Object]),
     __metadata("design:returntype", void 0)
 ], AuthProxyController.prototype, "validate", null);
+__decorate([
+    (0, common_1.Post)("service-token"),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [auth_proxy_dto_1.ServiceTokenDto, Object]),
+    __metadata("design:returntype", void 0)
+], AuthProxyController.prototype, "serviceToken", null);
 __decorate([
     (0, common_1.Get)("me"),
     (0, swagger_1.ApiBearerAuth)(),

@@ -207,6 +207,12 @@ let PaymentsProxyController = class PaymentsProxyController extends ProxyControl
     get(id, authorization, response) {
         return this.send(response, `payments/${id}`, "GET", authorization);
     }
+    checkout(id, authorization, response) {
+        return this.send(response, `payments/${id}/checkout`, "GET", authorization);
+    }
+    retryCheckout(id, headers, response) {
+        return this.send(response, `payments/${id}/retry-checkout`, "POST", headers.authorization, headers["idempotency-key"], {});
+    }
     capture(id, headers, response) {
         return this.send(response, `payments/${id}/capture`, "POST", headers.authorization, headers["idempotency-key"], {});
     }
@@ -230,6 +236,24 @@ __decorate([
     __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", void 0)
 ], PaymentsProxyController.prototype, "get", null);
+__decorate([
+    (0, common_1.Get)(":id/checkout"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Headers)("authorization")),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", void 0)
+], PaymentsProxyController.prototype, "checkout", null);
+__decorate([
+    (0, common_1.Post)(":id/retry-checkout"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Headers)()),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", void 0)
+], PaymentsProxyController.prototype, "retryCheckout", null);
 __decorate([
     (0, common_1.Post)(":id/capture"),
     __param(0, (0, common_1.Param)("id")),

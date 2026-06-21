@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthProxyService } from "./auth-proxy.service";
-import { LoginDto, LogoutDto, RefreshTokenDto, RegisterDto, ValidateTokenDto } from "./dto/auth-proxy.dto";
+import { LoginDto, LogoutDto, RefreshTokenDto, RegisterDto, ServiceTokenDto, ValidateTokenDto } from "./dto/auth-proxy.dto";
 export declare class AuthProxyController {
     private readonly proxy;
     constructor(proxy: AuthProxyService);
@@ -9,6 +9,7 @@ export declare class AuthProxyController {
     refresh(body: RefreshTokenDto, response: Response): Promise<void>;
     logout(body: LogoutDto, response: Response): Promise<void>;
     validate(body: ValidateTokenDto, response: Response): Promise<void>;
+    serviceToken(body: ServiceTokenDto, response: Response): Promise<void>;
     me(authorization: string | undefined, response: Response): Promise<void>;
     private send;
 }

@@ -48,7 +48,12 @@ const auth_proxy_module_1 = require("./modules/auth/auth-proxy.module");
 const catalog_proxy_module_1 = require("./modules/catalog/catalog-proxy.module");
 const customer_proxy_module_1 = require("./modules/customer/customer-proxy.module");
 const order_proxy_module_1 = require("./modules/order/order-proxy.module");
+const platform_proxy_module_1 = require("./modules/platform/platform-proxy.module");
+const audit_activity_middleware_1 = require("./common/middleware/audit-activity.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(audit_activity_middleware_1.AuditActivityMiddleware).forRoutes("*");
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -71,12 +76,25 @@ exports.AppModule = AppModule = __decorate([
                         .uri()
                         .default("http://localhost:3003"),
                     ORDER_SERVICE_URL: Joi.string().uri().default("http://localhost:3005"),
+                    COMMON_SERVICE_URL: Joi.string().uri().default("http://localhost:3006"),
+                    STORAGE_SERVICE_URL: Joi.string()
+                        .uri()
+                        .default("http://localhost:3007"),
+                    NOTIFICATION_SERVICE_URL: Joi.string()
+                        .uri()
+                        .default("http://localhost:3008"),
+                    AUDIT_SERVICE_URL: Joi.string().uri().default("http://localhost:3009"),
+                    AUDIT_INTERNAL_KEY: Joi.string()
+                        .min(16)
+                        .default("development-audit-internal-key"),
+                    REPORT_SERVICE_URL: Joi.string().uri().default("http://localhost:3010"),
                 }),
             }),
             auth_proxy_module_1.AuthProxyModule,
             catalog_proxy_module_1.CatalogProxyModule,
             customer_proxy_module_1.CustomerProxyModule,
             order_proxy_module_1.OrderProxyModule,
+            platform_proxy_module_1.PlatformProxyModule,
             health_module_1.HealthModule,
         ],
     })
