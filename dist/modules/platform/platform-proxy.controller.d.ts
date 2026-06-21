@@ -23,6 +23,10 @@ export declare class CommonProxyController extends BaseController {
     updateConfig(r: Response, key: string, b: unknown, a?: string): Promise<Response<any, Record<string, any>>>;
     flags(r: Response, a?: string): Promise<Response<any, Record<string, any>>>;
     updateFlag(r: Response, key: string, b: unknown, a?: string): Promise<Response<any, Record<string, any>>>;
+    provinces(r: Response, q: Record<string, string>, a?: string): Promise<Response<any, Record<string, any>>>;
+    districts(r: Response, q: Record<string, string>, a?: string): Promise<Response<any, Record<string, any>>>;
+    subdistricts(r: Response, q: Record<string, string>, a?: string): Promise<Response<any, Record<string, any>>>;
+    searchLocations(r: Response, q: Record<string, string>, a?: string): Promise<Response<any, Record<string, any>>>;
 }
 export declare class StorageProxyController extends BaseController {
     constructor(proxy: PlatformProxyService);

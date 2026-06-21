@@ -13,7 +13,13 @@ import {
   UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiQuery,
+  ApiTags,
+} from "@nestjs/swagger";
 import type { Response } from "express";
 import {
   PlatformProxyService,
@@ -128,6 +134,51 @@ export class CommonProxyController extends BaseController {
     @Headers("authorization") a?: string,
   ) {
     return this.send(r, `feature-flags/${key}`, "PATCH", a, b);
+  }
+
+  @Get("locations/provinces")
+  @ApiQuery({ name: "q", required: false })
+  provinces(
+    @Res() r: Response,
+    @Query() q: Record<string, string>,
+    @Headers("authorization") a?: string,
+  ) {
+    return this.send(r, "locations/provinces", "GET", a, undefined, q);
+  }
+
+  @Get("locations/districts")
+  @ApiQuery({ name: "provinceCode", required: true, type: Number })
+  @ApiQuery({ name: "q", required: false })
+  districts(
+    @Res() r: Response,
+    @Query() q: Record<string, string>,
+    @Headers("authorization") a?: string,
+  ) {
+    return this.send(r, "locations/districts", "GET", a, undefined, q);
+  }
+
+  @Get("locations/subdistricts")
+  @ApiQuery({ name: "districtCode", required: true, type: Number })
+  @ApiQuery({ name: "postalCode", required: false })
+  @ApiQuery({ name: "q", required: false })
+  subdistricts(
+    @Res() r: Response,
+    @Query() q: Record<string, string>,
+    @Headers("authorization") a?: string,
+  ) {
+    return this.send(r, "locations/subdistricts", "GET", a, undefined, q);
+  }
+
+  @Get("locations/search")
+  @ApiQuery({ name: "q", required: false })
+  @ApiQuery({ name: "postalCode", required: false })
+  @ApiQuery({ name: "limit", required: false, type: Number })
+  searchLocations(
+    @Res() r: Response,
+    @Query() q: Record<string, string>,
+    @Headers("authorization") a?: string,
+  ) {
+    return this.send(r, "locations/search", "GET", a, undefined, q);
   }
 }
 

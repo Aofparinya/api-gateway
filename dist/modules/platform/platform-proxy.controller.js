@@ -63,6 +63,18 @@ let CommonProxyController = class CommonProxyController extends BaseController {
     updateFlag(r, key, b, a) {
         return this.send(r, `feature-flags/${key}`, "PATCH", a, b);
     }
+    provinces(r, q, a) {
+        return this.send(r, "locations/provinces", "GET", a, undefined, q);
+    }
+    districts(r, q, a) {
+        return this.send(r, "locations/districts", "GET", a, undefined, q);
+    }
+    subdistricts(r, q, a) {
+        return this.send(r, "locations/subdistricts", "GET", a, undefined, q);
+    }
+    searchLocations(r, q, a) {
+        return this.send(r, "locations/search", "GET", a, undefined, q);
+    }
 };
 exports.CommonProxyController = CommonProxyController;
 __decorate([
@@ -159,6 +171,51 @@ __decorate([
     __metadata("design:paramtypes", [Object, String, Object, String]),
     __metadata("design:returntype", void 0)
 ], CommonProxyController.prototype, "updateFlag", null);
+__decorate([
+    (0, common_1.Get)("locations/provinces"),
+    (0, swagger_1.ApiQuery)({ name: "q", required: false }),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Query)()),
+    __param(2, (0, common_1.Headers)("authorization")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:returntype", void 0)
+], CommonProxyController.prototype, "provinces", null);
+__decorate([
+    (0, common_1.Get)("locations/districts"),
+    (0, swagger_1.ApiQuery)({ name: "provinceCode", required: true, type: Number }),
+    (0, swagger_1.ApiQuery)({ name: "q", required: false }),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Query)()),
+    __param(2, (0, common_1.Headers)("authorization")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:returntype", void 0)
+], CommonProxyController.prototype, "districts", null);
+__decorate([
+    (0, common_1.Get)("locations/subdistricts"),
+    (0, swagger_1.ApiQuery)({ name: "districtCode", required: true, type: Number }),
+    (0, swagger_1.ApiQuery)({ name: "postalCode", required: false }),
+    (0, swagger_1.ApiQuery)({ name: "q", required: false }),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Query)()),
+    __param(2, (0, common_1.Headers)("authorization")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:returntype", void 0)
+], CommonProxyController.prototype, "subdistricts", null);
+__decorate([
+    (0, common_1.Get)("locations/search"),
+    (0, swagger_1.ApiQuery)({ name: "q", required: false }),
+    (0, swagger_1.ApiQuery)({ name: "postalCode", required: false }),
+    (0, swagger_1.ApiQuery)({ name: "limit", required: false, type: Number }),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Query)()),
+    __param(2, (0, common_1.Headers)("authorization")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:returntype", void 0)
+], CommonProxyController.prototype, "searchLocations", null);
 exports.CommonProxyController = CommonProxyController = __decorate([
     (0, swagger_1.ApiTags)("Common"),
     (0, swagger_1.ApiBearerAuth)(),
